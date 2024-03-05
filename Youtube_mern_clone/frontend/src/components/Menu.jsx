@@ -11,7 +11,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 const MenuContainer=styled.div`
   flex:1;
   background-color:${({theme})=>theme.menuBg};
-  color:${({theme})=>theme.text};;
+  color:${({theme})=>theme.text};
 `
 // menu
 const Logo=styled.div`
@@ -46,14 +46,15 @@ const Hr=styled.hr`
   border-top: solid ${({theme})=>theme.hr} 0.1rem ;
 `
 const Login=styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display:flex;
+  justify-content:center;
+  flex-direction: column;
   gap:1rem;
-  margin: 1rem;
+  margin: 1.5rem 1rem;
   background: none;
   border: none;
   padding:0;  
+  color:${({theme})=>theme.text};
 `
 const LoginButton=styled.button`
   display: flex;
@@ -63,7 +64,7 @@ const LoginButton=styled.button`
   background-color: transparent;
   border: 0.1rem solid #3C9CED;
   color:#3C9CED;
-  border-radius: 5%;
+  border-radius: 0.5rem;
   padding:0.4rem;
   cursor: pointer;
   font-size:1.5rem;
@@ -88,7 +89,7 @@ export const Menu = ({theme,setTheme}) => {
         <Option>test</Option>
         <Option>asd</Option>
         <Hr/>
-        <Login ><LoginButton><AccountCircleIcon/>Sing in</LoginButton></Login>
+        <Login >sign in to like videos comment and subscribe <LoginButton><AccountCircleIcon/>Sing in</LoginButton></Login>
         <Hr/>
         <Option onClick={()=>setTheme(!theme)}><SettingsBrightnessIcon/>Light mode</Option>
       </Wrapper>
