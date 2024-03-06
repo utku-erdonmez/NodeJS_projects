@@ -3,28 +3,62 @@ import {Card} from '../components/Card'
 import styled from "styled-components"
 
 const Container=styled.div`
-    padding: 1rem;
+    padding-top:1rem;
+`;
+const CardDiv=styled.div`
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    gap:1rem;
-`
+    justify-content: space-evenly;  
+`;
 export const Home=()=>{
-    return(<Container>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/> <Card/>
-        <Card/>
-        <Card/>
-
-        <Card/>
-        <Card/><Card/>
-
-        
-        
-         </Container>)
+    return(
+        <Container>
+            <CardDiv>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/> 
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/> 
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/> 
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/> 
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>    
+            </CardDiv>
+        </Container>)
 }

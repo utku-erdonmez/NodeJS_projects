@@ -3,11 +3,11 @@ export const darkTheme={
     menuBg:"#0F0F0F",
     text:"#fff",
     hr:"grey"
-}
+};
 
 export const lightTheme={
     mainBg:"#f0f0f7",
     menuBg:"#fff",
     text:"black",
-    hr:"#e0dcdc"
-}
+    hr:"#F0F0F7"
+};
