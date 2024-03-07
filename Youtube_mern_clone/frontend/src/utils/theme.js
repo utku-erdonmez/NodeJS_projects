@@ -9,5 +9,5 @@ export const lightTheme={
     mainBg:"#f0f0f7",
     menuBg:"#fff",
     text:"black",
-    hr:"#F0F0F7"
+    hr:"#F0A0A7"
 };
