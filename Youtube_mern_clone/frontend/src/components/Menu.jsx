@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import LogoImage from '../img/ytlogo2.png'
 //icons
 import HomeIcon from '@mui/icons-material/Home';
