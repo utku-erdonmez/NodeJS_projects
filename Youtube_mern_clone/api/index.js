@@ -6,7 +6,6 @@ const App=express()
 dotenv.config()
 
 
-
 const connect =()=>{
     mongoose.connect(process.env.MONGO).then((e)=>console.log("connected to db")).catch((err)=>{console.log( err)})
 };
