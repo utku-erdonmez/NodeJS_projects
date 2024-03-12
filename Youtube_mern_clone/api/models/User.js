@@ -8,13 +8,12 @@ const UserSchema= new mongoose.Schema({
     },
     userEmail:{
         type:String,
-        required:true,
         unique:true
     },
     userPassword:{
         type:String,
         required:true,
-        unique:true//bunu kaldır denemek için koydum
+        
     },
     img:{
         type:String
