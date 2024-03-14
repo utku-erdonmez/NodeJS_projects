@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import User from "../models/User.js";
 import bcrypt from 'bcrypt'
 import { createError } from "../createError.js";
+import jwt from 'jsonwebtoken'
 
 export const signUp= async (req,res,next)=>{
     
@@ -17,6 +18,7 @@ export const signUp= async (req,res,next)=>{
         {
             next(err)
         }
+        
 };
 
 export const signIn = async (req, res, next) => {
@@ -28,17 +30,20 @@ export const signIn = async (req, res, next) => {
         if (!user.userPassword) {
             return next(createError(400, "User password is empty or not set!"));
         }
-        try{
-            const isCorrect =  bcrypt.compareSync((req.body.userPassword), user.userPassword);
-            if (!isCorrect) {
-                return next(createError(400, "Wrong password"));
-            }
-            if(isCorrect) res.send("User found");
-        }catch(err){
-            next(err)
+        const isCorrect =  bcrypt.compareSync((req.body.userPassword), user.userPassword);
+        if (!isCorrect) {
+            return next(createError(400, "Wrong password"));
         }
+        const token=jwt.sign({id:user._id},process.env.SECRET_KEY)
+        console.log('Memory usage:', process.memoryUsage());
+        res.cookie("access_token",token,{
+            httpOnly:true//prevents document.cookie
+        })
+        .status(200)
+        .json({...user._doc, userPassword: "hidden"});
+    
     } catch (err) {
-        next(err);
-    }
+        next(err); 
+    } 
 };
 

@@ -1,8 +1,16 @@
+//update user
+//delete 
+// get
+// subscribe
+// unsubscribe
+// like 
+// dislike 
+
 import express from "express";  
-import test from "../controllers/UserController.js";
+import { updateUser } from "../controllers/UserController.js";
 
 const router =express.Router();
 
-router.get('/userroute',test);
-router.get('/userroute/createuser',test)
-export default router;
+router.put('/:id',updateUser)
+
+export default router; 
