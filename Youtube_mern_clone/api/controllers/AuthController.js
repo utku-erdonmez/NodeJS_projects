@@ -1,11 +1,11 @@
-import mongoose from "mongoose";
 import User from "../models/User.js";
 import bcrypt from 'bcrypt'
 import { createError } from "../createError.js";
 import jwt from 'jsonwebtoken'
+import dotenv from "dotenv";
 
+dotenv.config();
 export const signUp= async (req,res,next)=>{
-    
       try{
             const saltRounds=13;
             const salt =  bcrypt.genSaltSync(saltRounds);
@@ -17,8 +17,7 @@ export const signUp= async (req,res,next)=>{
         }catch(err)
         {
             next(err)
-        }
-        
+        }     
 };
 
 export const signIn = async (req, res, next) => {
@@ -35,7 +34,7 @@ export const signIn = async (req, res, next) => {
             return next(createError(400, "Wrong password"));
         }
         const token=jwt.sign({id:user._id},process.env.SECRET_KEY)
-        console.log('Memory usage:', process.memoryUsage());
+        //console.log('Memory usage:', process.memoryUsage());
         res.cookie("access_token",token,{
             httpOnly:true//prevents document.cookie
         })

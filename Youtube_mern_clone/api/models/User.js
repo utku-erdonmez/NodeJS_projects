@@ -18,9 +18,12 @@ const UserSchema= new mongoose.Schema({
     img:{
         type:String
     },
-    subscribers:{
+    subscriberCount:{
         type:Number,
         default:0
+    },
+    subscriberChannels:{
+        type:[String]
     },
     subscribedChannels:{
         type:[String]
