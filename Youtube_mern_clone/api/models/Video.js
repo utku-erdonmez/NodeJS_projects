@@ -4,7 +4,6 @@ const VideoSchema= new mongoose.Schema({
     userId:{
         type:String,
         required:true,
-        unique:true
     },
     videoTitle:{
         type:String,
@@ -19,7 +18,7 @@ const VideoSchema= new mongoose.Schema({
         required:true
     },
     videoVideo:{
-        type:Number,
+        type:String,
         required:true
     },
     videoViews:{
@@ -31,11 +30,11 @@ const VideoSchema= new mongoose.Schema({
         default:[]
     },
     videoLikes:{
-        type:String,
+        type:[String],
         default:[]
     },
     videoDislikes:{
-        type:String,
+        type:[String],
         default:[]
     },
 },{timestamps:true});
