@@ -73,11 +73,11 @@ const Button = styled.div`
   color:${({theme})=>theme.text};
   cursor: pointer;
 `;
-const VideoInfo=styled.div`
+/*const VideoInfo=styled.div`
   color:${({theme})=>theme.hr};
   margin-left: 1rem;
 
-`;
+`; */
 const VideoDescription=styled.div`
   color:${({theme})=>theme.text};
   margin-top:1rem;
@@ -91,7 +91,7 @@ export const Video = () => {
     <Container>
         <Content>
           <VideoDiv>
-          <iframe    height= '620' width='100%'src="https://www.youtube.com/embed/G81e4utp3Mo?si=EcdrY0o4EA9VnrCj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; allowfullscreen" allowfullscreen="true"></iframe>
+          <iframe    height= '620' width='100%'src="https://www.youtube.com/embed/ppG81e4utp3Mo?si=EcdrY0o4EA9VnrCj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; allowfullscreen" allowfullscreen="true"></iframe>
           </VideoDiv>
           <VideoTitle>Video title here</VideoTitle>
           <VideoDetails>

@@ -4,13 +4,7 @@ import { Link } from 'react-router-dom';
 import styled from "styled-components"
 
 
-export const SignIn = ({setHideMenuNavbar}) => {
-  useEffect(() => {
-    setHideMenuNavbar(true);
-    return () => {
-      setHideMenuNavbar(false);
-    };
-  });
+export const SignIn = () => {
 
 
   const Container=styled.div`
@@ -68,14 +62,14 @@ background-color : orange ;
         <MailField placeholder='E-mail'></MailField>
         <PasswordFiled placeholder='password'></PasswordFiled>
         <Link to='/'>
-          <SingupButton onClick={()=>setHideMenuNavbar(false)}>Login Button</SingupButton>
+          <SingupButton>Login Button</SingupButton>
         </Link>
         <Title>Sign Up</Title>
         <MailField placeholder='E-mail'></MailField>
         <UsernameFiled placeholder='username'></UsernameFiled>
         <PasswordFiled placeholder='password'></PasswordFiled>
         <Link to='/'>
-          <SingupButton onClick={()=>setHideMenuNavbar(false)}>Sing Up Button</SingupButton>
+          <SingupButton>Sing Up Button</SingupButton>
         </Link>
       </LoginDiv>
     </Container>

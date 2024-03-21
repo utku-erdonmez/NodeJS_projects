@@ -81,9 +81,15 @@ export const Menu = ({theme,setTheme}) => {
                   Yuuutup
           </Logo>
         </Link>
+        <Link to='/' style={{textDecoration:"none",color:"inherit"}}>
         <Option><HomeIcon/> home</Option>
+        </Link>
+        <Link to='/trends' style={{textDecoration:"none",color:"inherit"}}>
         <Option><ExploreIcon/>Explore</Option>
+        </Link>
+        <Link to='/subscriptions' style={{textDecoration:"none",color:"inherit"}}>
         <Option><SubscriptionsIcon/>Subscriptions</Option>
+        </Link>
         <Hr/>
         <Option>test</Option>
         <Option>asd</Option>

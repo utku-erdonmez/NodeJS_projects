@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import cardImage from '../img/card.png'
+//import cardImage from '../img/card.png'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
+import {format} from 'timeago.js'
+
 const Container =styled.div`
   width:${(props) => props.type === "sm" ? "100%":"15rem"};
   display: ${(props) => props.type === "sm" && "flex"};
@@ -33,17 +36,28 @@ const Views=styled.div`
   font-size: ${(props) => props.type !== "sm" ? "0.7":"0.65rem"};
 `;
 
-export const Card = ({ type }) => {
+export const Card = ({ type,video }) => {
+
+  const [channel,setChannel]=useState("");
+  
+  useEffect(()=>{
+      const fetchChannel=async()=>{
+        const res=await axios.get(`http://localhost:8002/api/user/find/${video.userId}`)
+        setChannel(res.data)
+    }
+    fetchChannel();
+  },[video.userId])
   return (
     <Link to='/video/test'style={{textDecoration:"none",color:"inherit"}}>
       <Container type={type}>
-        <Img src={cardImage}  type={type} ></Img>
+        <Img src={video.videoImg}  type={type} ></Img>
         <Details type={type}>
-              <VideoName>This is a video title</VideoName>
-              <ChannelName>Channel name</ChannelName>
-              <Views type={type}>21k Views • 1 Second Ago</Views>
+              <VideoName>{video.videoTitle}</VideoName>
+              <ChannelName>{channel.userName}</ChannelName>
+              <Views type={type}>{video.videoViews} Views • {format(video.createdAt)}</Views>
         </Details>
       </Container>
     </Link>
   )
 };
+ 

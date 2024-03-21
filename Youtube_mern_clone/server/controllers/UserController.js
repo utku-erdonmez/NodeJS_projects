@@ -75,7 +75,7 @@ export const unSubscribeUser=async(req,res,next)=>{
             $pull:{subscriberChannels:req.decoded.id}
         });
 
-        res.status(200).json('User subscribed successfully');
+        res.status(200).json('User unsubscribed successfully');
     
     }catch(err){
         return next(err)
@@ -83,9 +83,3 @@ export const unSubscribeUser=async(req,res,next)=>{
     
 
 }
-// export const like=()=>{
-
-// }
-// export const dislike=()=>{
-    
-//}

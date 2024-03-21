@@ -6,11 +6,12 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Link } from 'react-router-dom';
 
 const Container=styled.div`
-width: 100%;
+  width: 100%;
+  position: sticky;
 `;
 const Wrappers=styled.div`
   display: flex;
-  justify-content:space-between;
+  justify-content:flex-end;
   align-items: center;
 `;
 const SearchDiv=styled.div`
