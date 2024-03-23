@@ -1,10 +1,10 @@
 import React from 'react'
-import { useEffect } from 'react';
+//import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from "styled-components"
 
 
-export const SignIn = () => {
+export const SignIn = ({setHideMenuNavbar}) => {
 
 
   const Container=styled.div`
@@ -17,10 +17,10 @@ export const SignIn = () => {
   `
   const LoginDiv=styled.div`
     background-color: aliceblue;
-    display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+      display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 
     height: 40rem;
     width: 20rem;
@@ -52,8 +52,9 @@ margin: 0.5rem 0;
    margin:3rem 0;
    font-size:2rem;
    border-radius:1rem;
-background-color : orange ;
+   background-color : orange ;
    `
+  
   return (
     <Container>
       <LoginDiv>
@@ -61,16 +62,16 @@ background-color : orange ;
 
         <MailField placeholder='E-mail'></MailField>
         <PasswordFiled placeholder='password'></PasswordFiled>
-        <Link to='/'>
+        
           <SingupButton>Login Button</SingupButton>
-        </Link>
+        
         <Title>Sign Up</Title>
         <MailField placeholder='E-mail'></MailField>
         <UsernameFiled placeholder='username'></UsernameFiled>
         <PasswordFiled placeholder='password'></PasswordFiled>
-        <Link to='/'>
+        
           <SingupButton>Sing Up Button</SingupButton>
-        </Link>
+        
       </LoginDiv>
     </Container>
   )

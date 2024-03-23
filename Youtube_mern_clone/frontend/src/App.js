@@ -38,7 +38,7 @@ function App() {
             {!hideMenuNavbar &&<Navbar />}
             <Wrapper>
             <Routes>
-            <Route path='/signin' element={<SignIn setHideMenuNavbar={setHideMenuNavbar} />} />
+              <Route path='/signin' element={<SignIn setHideMenuNavbar={setHideMenuNavbar} />} />
               <Route path='/' element={<Home type="random"/>} />
               <Route path='/trends' element={<Home type="trends"/>} />
               <Route path='/subscriptions' element={<Home type="subscriptions"/>} />

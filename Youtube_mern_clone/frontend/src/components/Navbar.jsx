@@ -3,15 +3,14 @@ import styled from 'styled-components'
 //icons
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SearchIcon from '@mui/icons-material/Search';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const Container=styled.div`
-  width: 100%;
-  position: sticky;
+width: 100%;
 `;
 const Wrappers=styled.div`
   display: flex;
-  justify-content:flex-end;
+  justify-content:space-between;
   align-items: center;
 `;
 const SearchDiv=styled.div`
@@ -28,7 +27,7 @@ const SearchInput=styled.input`
 text-indent: 0.5rem;
 align-content: center;
 width:100%;
-height: 2rem;
+height:3rem;
 border-radius:5rem;
 `;
 const LoginButton=styled.button`
@@ -49,6 +48,15 @@ const LoginButton=styled.button`
 `;
 
 export const Navbar = () => {
+  const location = useLocation();
+
+  // Check if the current route is the sign-in page
+  const isSignInPage = location.pathname === '/signIn';
+
+  // If it is the sign-in page, don't render the Navbar
+  if (isSignInPage) {
+    return null;
+  }
   return (
     <Container>
       <Wrappers>

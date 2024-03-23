@@ -12,6 +12,7 @@ const CardDiv=styled.div`
     justify-content: space-evenly;  
 `;
 export const Home=({type})=>{
+    
 
     const[videos,setVideos]=useState([]);
 

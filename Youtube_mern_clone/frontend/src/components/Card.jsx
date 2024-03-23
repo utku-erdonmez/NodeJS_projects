@@ -54,10 +54,9 @@ export const Card = ({ type,video }) => {
         <Details type={type}>
               <VideoName>{video.videoTitle}</VideoName>
               <ChannelName>{channel.userName}</ChannelName>
-              <Views type={type}>{video.videoViews} Views • {format(video.createdAt)}</Views>
+              <Views type={type}>{video.videoViews} Views • {format(video.createdAt)} Ago</Views>
         </Details>
       </Container>
     </Link>
   )
 };
- 
