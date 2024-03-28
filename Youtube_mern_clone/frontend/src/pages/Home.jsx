@@ -38,7 +38,7 @@ export const Home=({type})=>{
             <CardDiv>
                 {videos.map((video)=>{
                     
-                    return <Card  video={video}/>//key neden var
+                    return <Card key={video._id} video={video}/>//key neden var
                 })}
 
             </CardDiv>

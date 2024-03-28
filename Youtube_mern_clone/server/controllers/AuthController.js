@@ -35,14 +35,47 @@ export const signIn = async (req, res, next) => {
         }
         const token=jwt.sign({id:user._id},process.env.SECRET_KEY)
         //console.log('Memory usage:', process.memoryUsage());
-        res.cookie("access_token",token,{
-            httpOnly:true//prevents document.cookie
-        })
-        .status(200)
-        .json({...user._doc, userPassword: "hidden"});
+        res
+            .cookie("access_token",token,{
+                httpOnly:true//prevents document.cookie
+            })
+            .status(200)
+            .json({...user._doc, userPassword: "hidden"});
     
     } catch (err) {
         next(err); 
     } 
 };
 
+export const googleAuth=async(req,res,next)=>{
+    try{
+        const user = await User.findOne({ userName: req.body.userName });
+        const token=jwt.sign({id:user._id},process.env.SECRET_KEY)
+        if(user){
+            res
+            .cookie("access_token",token,{
+                httpOnly:true//prevents document.cookie
+            })
+            .status(200)
+            .json({...user._doc, userPassword: "hidden"});
+        }else{
+                const saltRounds=13;
+                const salt =  bcrypt.genSaltSync(saltRounds);
+                const hash =  bcrypt.hashSync(req.body.userPassword,salt)
+                
+                console.log((req.body.userPassword))//check is there any password
+                
+                const newUser= await new User({...req.body,userPassword:hash});
+                await newUser.save()
+                res
+                    .cookie("access_token",token,{
+                        httpOnly:true//prevents document.cookie
+                    })
+                    .status(200)
+                    .json({...user._doc, userPassword: "hidden"});
+        }
+    }catch(err){
+        next(err)
+    }
+
+}

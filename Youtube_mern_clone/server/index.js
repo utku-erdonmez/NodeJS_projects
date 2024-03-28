@@ -13,7 +13,15 @@ dotenv.config()
 const connect =()=>{
     mongoose.connect(process.env.MONGO_URI).then((e)=>console.log("connected to db")).catch((err)=>{console.log( err)})
 };
-App.use(cors())
+// Allow requests from a specific origin
+
+// Allow requests from a specific origin and enable credentials
+App.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true
+}));
+
+
 App.use(cookieParser()); 
 App.use(express.json())//conv erts json to a js object
  

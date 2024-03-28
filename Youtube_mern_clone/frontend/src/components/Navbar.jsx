@@ -1,9 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
 //icons
+import VideoCallIcon from '@mui/icons-material/VideoCall';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SearchIcon from '@mui/icons-material/Search';
+
 import { Link, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { sizeHeight } from '@mui/system';
 
 const Container=styled.div`
 width: 100%;
@@ -23,6 +27,16 @@ const SearchDiv=styled.div`
   display: flex;
   align-items:center;
 `;
+const UserDiv=styled.div`
+margin-top: 0.4rem;
+height: 4rem;
+  margin-right: 2rem;
+  display: flex;
+  align-items: center;
+  gap:10px;
+  color:${({theme})=>theme.text};
+
+`
 const SearchInput=styled.input`
 text-indent: 0.5rem;
 align-content: center;
@@ -46,10 +60,20 @@ const LoginButton=styled.button`
   cursor: pointer;
   font-size:1.5rem;
 `;
+const Avatar = styled.img`
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color: #999;
+`;
 
 export const Navbar = () => {
-  const location = useLocation();
+  const {currUser} = useSelector((state)=>state.user);
+  console.log(currUser)
 
+  const location = useLocation();
+  //const selector =useSelector()
+  
   // Check if the current route is the sign-in page
   const isSignInPage = location.pathname === '/signIn';
 
@@ -57,6 +81,7 @@ export const Navbar = () => {
   if (isSignInPage) {
     return null;
   }
+ 
   return (
     <Container>
       <Wrappers>
@@ -64,10 +89,13 @@ export const Navbar = () => {
           <SearchInput placeholder='search'></SearchInput>
           <SearchIcon/>
         </SearchDiv>
-        <Link to='/signIn' style={{textDecoration:"none"}}>
-        <LoginButton><AccountCircleIcon/>Sing in</LoginButton>
-        </Link>
+
+       { currUser ? (
+        <UserDiv><VideoCallIcon style={{fontSize:"2.5rem"}}></VideoCallIcon><Avatar></Avatar>{currUser.userName}</UserDiv>
+       ) :(<Link to='/signIn' style={{textDecoration:"none"}}>
+        <LoginButton><AccountCircleIcon/>Login</LoginButton>
+        </Link>)}
       </Wrappers>
     </Container>
   )
-}
+} 

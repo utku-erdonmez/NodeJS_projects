@@ -8,6 +8,7 @@ import ExploreIcon from '@mui/icons-material/Explore';
 import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
 import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useSelector } from 'react-redux';
 
 const MenuContainer=styled.div`
   flex:1;
@@ -72,6 +73,8 @@ const LoginButton=styled.button`
 `;
 
 export const Menu = ({theme,setTheme}) => {
+  const {currUser} = useSelector((state)=>state.user);
+  console.log(currUser)
   return (
     <MenuContainer>
       <Wrapper>
@@ -97,10 +100,15 @@ export const Menu = ({theme,setTheme}) => {
         <Option>sdas</Option>
         <Option>test</Option>
         <Option>asd</Option>
-        <Hr/>
+        
+        
+        {currUser ? (null):(
+          <>
+          <Hr></Hr>
         <Link to='/signIn' style={{textDecoration:"none"}}>
+          
         <Login >sign in to like videos comment and subscribe. <LoginButton><AccountCircleIcon/>Login</LoginButton></Login>
-        </Link>
+        </Link></>)}
         <Hr/>
         <Option onClick={()=>setTheme(!theme)}><SettingsBrightnessIcon/>Light Mode</Option>
       </Wrapper>
