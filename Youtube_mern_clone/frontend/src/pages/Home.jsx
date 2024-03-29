@@ -6,12 +6,11 @@ import axios from 'axios'
 
 const Container=styled.div`
     padding-top:1rem;
-`;
-const CardDiv=styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;  
 `;
+
 export const Home=({type})=>{
     
 
@@ -35,13 +34,9 @@ export const Home=({type})=>{
     
     return(  
         <Container>
-            <CardDiv>
-                {videos.map((video)=>{
-                    
-                    return <Card key={video._id} video={video}/>//key neden var
-                })}
+            
+                {videos.map((video)=><Card key={video._id} type={"lm"} video={video}></Card>)}
 
-            </CardDiv>
         </Container>)
 } 
 //30

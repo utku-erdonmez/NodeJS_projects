@@ -43,7 +43,8 @@ function App() {
               <Route path='/' element={<Home type="random"/>} />
               <Route path='/trends' element={<Home type="trends"/>} />
               <Route path='/subscriptions' element={<Home type="subscriptions"/>} />
-              <Route path='/video/:id' element={<Video />} />
+            
+              <Route path='/video/:id' element={<Video/>} />
             </Routes>
             </Wrapper>
           </Main>

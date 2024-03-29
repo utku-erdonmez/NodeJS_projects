@@ -96,7 +96,7 @@ export const SignIn = () => {
     setPassword(e.target.value);
   };
 
-  const handleNameChange = (e) => {
+  const handleNameChange = (e) => { 
     setName(e.target.value);
   };
   const handleLogin=async(e)=>{
@@ -121,6 +121,7 @@ export const SignIn = () => {
   }
 
   const loginWithGoogle=async ()=>{
+    try{
     signInWithPopup(auth,provider)
     .then(async (googleRes)=>{
       dispatch(loginStart());
@@ -134,15 +135,21 @@ export const SignIn = () => {
         },
         withCredentials:true
         
-    })
+    }
+    
+    )
+    return res
     }).then((res)=>{
       dispatch(loginSuccess(res.data))
       navigate("/")
     })
     .catch((err)=>{
+      console.log(err)
       dispatch(loginFailure())
     })
-  }
+  }catch(err){
+    console.log(err)
+  }}
   return (
     <Container>
       <LoginDiv>

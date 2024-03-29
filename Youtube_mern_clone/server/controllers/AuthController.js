@@ -50,8 +50,8 @@ export const signIn = async (req, res, next) => {
 export const googleAuth=async(req,res,next)=>{
     try{
         const user = await User.findOne({ userName: req.body.userName });
-        const token=jwt.sign({id:user._id},process.env.SECRET_KEY)
         if(user){
+            const token=jwt.sign({id:user._id},process.env.SECRET_KEY)
             res
             .cookie("access_token",token,{
                 httpOnly:true//prevents document.cookie
@@ -67,6 +67,7 @@ export const googleAuth=async(req,res,next)=>{
                 
                 const newUser= await new User({...req.body,userPassword:hash});
                 await newUser.save()
+                const token=jwt.sign({id:newUser._id},process.env.SECRET_KEY)
                 res
                     .cookie("access_token",token,{
                         httpOnly:true//prevents document.cookie
@@ -75,6 +76,7 @@ export const googleAuth=async(req,res,next)=>{
                     .json({...user._doc, userPassword: "hidden"});
         }
     }catch(err){
+        console.log(err)
         next(err)
     }
 

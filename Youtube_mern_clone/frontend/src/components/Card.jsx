@@ -37,20 +37,31 @@ const Views=styled.div`
 `;
 
 export const Card = ({ type,video }) => {
-
-  const [channel,setChannel]=useState("");
   
+  if(!video){
+    console.log("bir şey eksik amk")
+  }
+  else{
+    console.log("render yeri+",video)
+  }
+  const [channel,setChannel]=useState("");
   useEffect(()=>{
+    try{
       const fetchChannel=async()=>{
         const res=await axios.get(`http://localhost:8002/api/user/find/${video.userId}`)
-        setChannel(res.data)
+        setChannel(res.data)}
+      fetchChannel();
+    }    catch(err){
+      console.log(err);
     }
-    fetchChannel();
+    
   },[video.userId])
+  
   return (
-    <Link to='/video/test'style={{textDecoration:"none",color:"inherit"}}>
+    
+    <Link to={`/video/${video._id}`}style={{textDecoration:"none",color:"inherit"}}>
       <Container type={type}>
-        <Img src={video.videoImg}  type={type} ></Img>
+        {video.videoImg&&<Img src={video.videoImg}  type={type} ></Img>}
         <Details type={type}>
               <VideoName>{video.videoTitle}</VideoName>
               <ChannelName>{channel.userName}</ChannelName>

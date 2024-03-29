@@ -69,8 +69,7 @@ const Avatar = styled.img`
 
 export const Navbar = () => {
   const {currUser} = useSelector((state)=>state.user);
-  console.log(currUser)
-
+ 
   const location = useLocation();
   //const selector =useSelector()
   
@@ -91,7 +90,7 @@ export const Navbar = () => {
         </SearchDiv>
 
        { currUser ? (
-        <UserDiv><VideoCallIcon style={{fontSize:"2.5rem"}}></VideoCallIcon><Avatar></Avatar>{currUser.userName}</UserDiv>
+        <UserDiv><VideoCallIcon style={{fontSize:"2.5rem"}}></VideoCallIcon><Avatar src={currUser.img}></Avatar>{currUser.userName}</UserDiv>
        ) :(<Link to='/signIn' style={{textDecoration:"none"}}>
         <LoginButton><AccountCircleIcon/>Login</LoginButton>
         </Link>)}

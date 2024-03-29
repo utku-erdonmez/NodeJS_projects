@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import channelImage from '../img/card.png'
 import { Card } from '../components/Card';
 //icons
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
@@ -87,17 +86,18 @@ const Recommend=styled.div`
 `;
 
 export const Video = () => {
+  
   return (
     <Container>
         <Content>
           <VideoDiv>
-          <iframe    height= '620' width='100%'src="https://www.youtube.com/embed/ppG81e4utp3Mo?si=EcdrY0o4EA9VnrCj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; allowfullscreen" allowfullscreen="true"></iframe>
+
           </VideoDiv>
           <VideoTitle>Video title here</VideoTitle>
           <VideoDetails>
-            {/* <VideoInfo>21k Views • 1 Day Ago</VideoInfo> */}
+          
             <ChannelDiv>
-              <ChannelImg src={channelImage}></ChannelImg>
+              <ChannelImg ></ChannelImg>
               <ChannelDetails>
                 <ChannelName>Somechannel </ChannelName>
                 <ChannelSubscribers>11K Subscribers</ChannelSubscribers>
@@ -124,16 +124,8 @@ export const Video = () => {
           <Comments/> 
         </Content>    
       <Recommend>
-        <Card  type="sm"/>
-        <Card  type="sm"/>
-        <Card  type="sm"/>
-        <Card  type="sm"/>
-        <Card  type="sm"/>
-        <Card  type="sm"/>
-        <Card  type="sm"/>
-        <Card  type="sm"/>
-        <Card  type="sm"/>  
-      </Recommend>
+
+      </Recommend> 
     </Container>
   )
 }
