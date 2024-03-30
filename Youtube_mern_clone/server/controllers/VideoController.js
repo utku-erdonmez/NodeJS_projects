@@ -54,7 +54,7 @@ export const deleteVideo= async (req,res,next)=>{
 
 export const random=async (req,res,next)=>{
     try{
-        console.log("random requested")
+        
         const videos = await video.aggregate([{$sample:{size:36}}])
         res.status(200).json(videos)    
     }
@@ -66,6 +66,7 @@ export const random=async (req,res,next)=>{
 
 export const getVideo=async(req,res,next)=>{
     try{
+    
         const getVideo=await video.findById(req.params.id)
         await video.findByIdAndUpdate(req.params.id,{$inc:{views:1}})//whenever a video shows view increases
 

@@ -33,6 +33,7 @@ App.get("/",(req,res)=>{res.send("test")})
 App.use((err,req,res,next)=>{
     const status = err.status ||501;
     const message = err.message||"unknown error occured"
+    console.log(err)
     return res.status(status).json({
         success:false,
         status:status,

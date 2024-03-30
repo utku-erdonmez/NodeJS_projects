@@ -1,12 +1,20 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { Card } from '../components/Card';
+
+import { useDispatch, useSelector } from 'react-redux';
 //icons
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 import ThumbDownOffAltOutlinedIcon from "@mui/icons-material/ThumbDownOffAltOutlined";
 import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 import AddTaskOutlinedIcon from "@mui/icons-material/AddTaskOutlined";
 import { Comments } from '../components/Comments';
+import { useLocation } from 'react-router-dom';
+import axios from 'axios';
+import { dislike, fetchFailure, fetchStart, fetchSuccess, like } from '../redux/VideoSlice';
+import { format } from 'timeago.js';
+import ThumbDownAlt from '@mui/icons-material/ThumbDownAlt';
 
 const Container=styled.div`
   display: flex;
@@ -44,6 +52,7 @@ const ChannelName=styled.h2`
   color:${({theme})=>theme.text};
 `;
 const ChannelSubscribers=styled.h6`
+margin-top: 0.4rem;
   color:${({theme})=>theme.hr};
 `;
 const SubscribeButton=styled.button`
@@ -86,32 +95,92 @@ const Recommend=styled.div`
 `;
 
 export const Video = () => {
+  const dispatch=useDispatch()
+  const videoPath=useLocation().pathname.split("/")[2]
+  const [channel,setChannel] = useState({})
+
+  const handleLike=async ()=>{
+    try{
+      await axios.post(
+        `http://localhost:8002/api/video/like/${videoPath}`,
+        null, 
+        {
+            withCredentials: true
+        }
+    );
+      dispatch(like(currUser._id))
+    }catch(err){
+      console.log(err)
+
+    }
+  }
+  const handleDislike=async ()=>{
+    try{
+      await axios.post(
+        `http://localhost:8002/api/video/dislike/${videoPath}`,
+        null, 
+        {
+            withCredentials: true
+        })
+      dispatch(dislike(currUser._id))
+    }catch(err){
+      console.log(err)
+    }
+  }
+
+
+  useEffect(()=>{
+    const fetchData=async()=>{
+      try {
+        dispatch(fetchStart());
+        const fetchVideo = await axios.get(`http://localhost:8002/api/video/getVideo/${videoPath}`);
+
+        dispatch(fetchSuccess(fetchVideo.data));
   
+        const fetchChannel = await axios.get(`http://localhost:8002/api/user/find/${fetchVideo.data.userId}`);
+  
+        setChannel(fetchChannel.data);
+      } catch (err) {
+     
+        dispatch(fetchFailure(err)); 
+      }
+      
+    }
+    fetchData()
+
+  },[videoPath,dispatch]);//dispatch koymadım
+
+  const {currUser}=useSelector((state)=>state.user)
+  const {currVideo}=useSelector((state)=>state.video);
+
+
   return (
     <Container>
         <Content>
           <VideoDiv>
 
           </VideoDiv>
-          <VideoTitle>Video title here</VideoTitle>
+          <VideoTitle>{currVideo.videoTitle}</VideoTitle> 
           <VideoDetails>
           
             <ChannelDiv>
-              <ChannelImg ></ChannelImg>
+              <ChannelImg src={currVideo.videoImg}></ChannelImg>
+              
               <ChannelDetails>
-                <ChannelName>Somechannel </ChannelName>
-                <ChannelSubscribers>11K Subscribers</ChannelSubscribers>
+              <ChannelName>{channel.userName} </ChannelName>
+                
+                <ChannelSubscribers>{channel.subscriberCount+"•"+ format(currVideo.createdAt)} Ago</ChannelSubscribers>
               </ChannelDetails>
               <SubscribeButton>Subscribe</SubscribeButton>
             </ChannelDiv>      
             <VideoButtons>
-            <Button>
-              <ThumbUpOutlinedIcon /> 123
+            <Button onClick={handleLike}>
+              {currVideo.videoLikes?.includes(currUser._id)?(< ThumbUpIcon/>):(<ThumbUpOutlinedIcon/>)}{" " }{currVideo.videoLikes?.length}
             </Button>
-            <Button>
-              <ThumbDownOffAltOutlinedIcon /> 0
+            <Button onClick={handleDislike}>
+            {currVideo.videoDislikes?.includes(currUser._id)?(< ThumbDownAlt/>):(<ThumbDownOffAltOutlinedIcon/>)}{" " }{currVideo.videoDislikes?.length}
             </Button>
-            <Button>
+            <Button >
               <ReplyOutlinedIcon /> Share
             </Button>
             <Button>
@@ -119,12 +188,10 @@ export const Video = () => {
             </Button>
             </VideoButtons>
           </VideoDetails>       
-          <VideoDescription>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis sed neque eum doloremque vi Lorem ipsum dolor sit, amet consectetur adipisicing elit. Exercitationem dolore quaerat cum ipsa soluta dolorem, minus nobis ipsum maxime. Vitae impedit fuga modi cum tempore totam, magnam ad quis, neque, quas voluptas blanditiis vel voluptates in? Minima omnis eos recusandae velit veniam delectus, vel, provident labore nesciunt quam molestias ea. tae, facere natus quisquam excepturi recusandae eos.</VideoDescription>
-          <Hr></Hr>
+          <VideoDescription>{currVideo.videoDescription}</VideoDescription>
           <Comments/> 
         </Content>    
       <Recommend>
-
       </Recommend> 
     </Container>
   )

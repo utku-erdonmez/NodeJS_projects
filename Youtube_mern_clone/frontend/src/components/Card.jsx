@@ -38,12 +38,6 @@ const Views=styled.div`
 
 export const Card = ({ type,video }) => {
   
-  if(!video){
-    console.log("bir şey eksik amk")
-  }
-  else{
-    console.log("render yeri+",video)
-  }
   const [channel,setChannel]=useState("");
   useEffect(()=>{
     try{
@@ -65,7 +59,7 @@ export const Card = ({ type,video }) => {
         <Details type={type}>
               <VideoName>{video.videoTitle}</VideoName>
               <ChannelName>{channel.userName}</ChannelName>
-              <Views type={type}>{video.videoViews} Views • {format(video.createdAt)} Ago</Views>
+              <Views type={type}>{video.videoViews} Views • {format(video.createdAt)}</Views>
         </Details>
       </Container>
     </Link>

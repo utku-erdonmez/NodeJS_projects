@@ -74,7 +74,7 @@ const LoginButton=styled.button`
 
 export const Menu = ({theme,setTheme}) => {
   const {currUser} = useSelector((state)=>state.user);
-  console.log(currUser)
+
   return (
     <MenuContainer>
       <Wrapper>
