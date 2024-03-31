@@ -34,7 +34,8 @@ export const videoSlice = createSlice({
         state.currVideo.videoLikes.splice(state.currVideo.videoLikes.findIndex((userId)=>userId===action.payload),1);
         
       }
-    },
+  
+    }
   }
 });
 

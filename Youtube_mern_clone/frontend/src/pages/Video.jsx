@@ -10,11 +10,12 @@ import ThumbDownOffAltOutlinedIcon from "@mui/icons-material/ThumbDownOffAltOutl
 import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 import AddTaskOutlinedIcon from "@mui/icons-material/AddTaskOutlined";
 import { Comments } from '../components/Comments';
-import { useLocation } from 'react-router-dom';
+import {useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { dislike, fetchFailure, fetchStart, fetchSuccess, like } from '../redux/VideoSlice';
 import { format } from 'timeago.js';
 import ThumbDownAlt from '@mui/icons-material/ThumbDownAlt';
+import { subscribe } from '../redux/UserSlice';
 
 const Container=styled.div`
   display: flex;
@@ -52,6 +53,10 @@ const ChannelName=styled.h2`
   color:${({theme})=>theme.text};
 `;
 const ChannelSubscribers=styled.h6`
+margin-top: 0.4rem;
+  color:${({theme})=>theme.hr};
+`;
+const VideoDate=styled.h6`
 margin-top: 0.4rem;
   color:${({theme})=>theme.hr};
 `;
@@ -95,10 +100,41 @@ const Recommend=styled.div`
 `;
 
 export const Video = () => {
+  const user=useSelector((state)=>state.user);
+  const {currUser}=user;
+  const {currVideo}=useSelector((state)=>state.video);
+
+
   const dispatch=useDispatch()
   const videoPath=useLocation().pathname.split("/")[2]
   const [channel,setChannel] = useState({})
 
+
+
+  useEffect(()=>{
+    console.log("çalıştı")
+   
+    const fetchData=async()=>{
+      try {
+        dispatch(fetchStart());
+        const fetchVideo = await axios.get(`http://localhost:8002/api/video/getVideo/${videoPath}`);
+
+        dispatch(fetchSuccess(fetchVideo.data));
+  
+        const fetchChannel = await axios.get(`http://localhost:8002/api/user/find/${fetchVideo.data.userId}`);
+
+        setChannel(fetchChannel.data);
+      } catch (err) {
+     
+        dispatch(fetchFailure(err)); 
+      }
+      
+    }
+    fetchData()
+   
+
+
+  },[]);
   const handleLike=async ()=>{
     try{
       await axios.post(
@@ -127,72 +163,79 @@ export const Video = () => {
       console.log(err)
     }
   }
+  const notCompleted=()=>{
+    alert("Not completed yet");
 
+  }
+  const navigate=useNavigate()
+  const handleSubscribe=async ()=>{
+    try{
+      if(currUser.subscribedChannels.includes(channel._id)){
+        await axios.put(
+        
+          `http://localhost:8002/api/user/unsub/${channel._id }`,
+          null, 
+          {
+              withCredentials: true
+          })
 
-  useEffect(()=>{
-    const fetchData=async()=>{
-      try {
-        dispatch(fetchStart());
-        const fetchVideo = await axios.get(`http://localhost:8002/api/video/getVideo/${videoPath}`);
-
-        dispatch(fetchSuccess(fetchVideo.data));
-  
-        const fetchChannel = await axios.get(`http://localhost:8002/api/user/find/${fetchVideo.data.userId}`);
-  
-        setChannel(fetchChannel.data);
-      } catch (err) {
-     
-        dispatch(fetchFailure(err)); 
       }
-      
+      else{
+        await axios.put(
+        
+          `http://localhost:8002/api/user/sub/${channel._id }`,
+          null, 
+          {
+              withCredentials: true
+          })
+      }
+
+      dispatch(subscribe(channel._id))
+    }catch(err){
+      console.log(err)
     }
-    fetchData()
+  }
 
-  },[videoPath,dispatch]);//dispatch koymadım
+  //dispatch koymadım
 
-  const {currUser}=useSelector((state)=>state.user)
-  const {currVideo}=useSelector((state)=>state.video);
-
+  
 
   return (
-    <Container>
+    currUser ? (
+      <Container>
         <Content>
-          <VideoDiv>
-
-          </VideoDiv>
+          <VideoDiv></VideoDiv>
           <VideoTitle>{currVideo.videoTitle}</VideoTitle> 
           <VideoDetails>
-          
             <ChannelDiv>
               <ChannelImg src={currVideo.videoImg}></ChannelImg>
-              
               <ChannelDetails>
-              <ChannelName>{channel.userName} </ChannelName>
-                
-                <ChannelSubscribers>{channel.subscriberCount+"•"+ format(currVideo.createdAt)} Ago</ChannelSubscribers>
+                <ChannelName>{channel.userName}</ChannelName>
+                <VideoDate>{channel.subscriberCount} Subscribers</VideoDate>
+                <ChannelSubscribers>{currVideo.videoViews} views * {format(currVideo.createdAt)}</ChannelSubscribers>
               </ChannelDetails>
-              <SubscribeButton>Subscribe</SubscribeButton>
+              <SubscribeButton onClick={handleSubscribe}>{currUser.subscribedChannels.includes(channel._id) ? "UNSUB" : "SUBSCRIBE"}</SubscribeButton>
             </ChannelDiv>      
             <VideoButtons>
-            <Button onClick={handleLike}>
-              {currVideo.videoLikes?.includes(currUser._id)?(< ThumbUpIcon/>):(<ThumbUpOutlinedIcon/>)}{" " }{currVideo.videoLikes?.length}
-            </Button>
-            <Button onClick={handleDislike}>
-            {currVideo.videoDislikes?.includes(currUser._id)?(< ThumbDownAlt/>):(<ThumbDownOffAltOutlinedIcon/>)}{" " }{currVideo.videoDislikes?.length}
-            </Button>
-            <Button >
-              <ReplyOutlinedIcon /> Share
-            </Button>
-            <Button>
-              <AddTaskOutlinedIcon /> Save
-            </Button>
+              <Button onClick={handleLike}>
+                {currVideo.videoLikes?.includes(currUser._id) ? <ThumbUpIcon/> : <ThumbUpOutlinedIcon/>} {currVideo.videoLikes?.length}
+              </Button>
+              <Button onClick={handleDislike}>
+                {currVideo.videoDislikes?.includes(currUser._id) ? <ThumbDownAlt/> : <ThumbDownOffAltOutlinedIcon/>} {currVideo.videoDislikes?.length}
+              </Button>
+              <Button>
+                <ReplyOutlinedIcon onClick={notCompleted}/> Share
+              </Button>
+              <Button>
+                <AddTaskOutlinedIcon onClick={notCompleted}/> Save
+              </Button>
             </VideoButtons>
           </VideoDetails>       
           <VideoDescription>{currVideo.videoDescription}</VideoDescription>
           <Comments/> 
         </Content>    
-      <Recommend>
-      </Recommend> 
-    </Container>
-  )
-}
+        <Recommend></Recommend> 
+      </Container>
+    ) : navigate("/signIn")
+  );
+    }  

@@ -68,8 +68,10 @@ export const getVideo=async(req,res,next)=>{
     try{
     
         const getVideo=await video.findById(req.params.id)
-        await video.findByIdAndUpdate(req.params.id,{$inc:{views:1}})//whenever a video shows view increases
-
+         //whenever a video shows view increases
+        
+        await video.findByIdAndUpdate(req.params.id,{$inc:{videoViews:1}})
+  
         res.status(200).json(getVideo);
 
 

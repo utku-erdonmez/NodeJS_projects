@@ -4,11 +4,13 @@ import { Link } from 'react-router-dom';
 import LogoImage from '../img/ytlogo2.png'
 //icons
 import HomeIcon from '@mui/icons-material/Home';
+import LogoutIcon from '@mui/icons-material/Logout';
 import ExploreIcon from '@mui/icons-material/Explore';
 import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
 import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../redux/UserSlice';
 
 const MenuContainer=styled.div`
   flex:1;
@@ -74,6 +76,10 @@ const LoginButton=styled.button`
 
 export const Menu = ({theme,setTheme}) => {
   const {currUser} = useSelector((state)=>state.user);
+  const dispatch=useDispatch();
+  const logoutPls=()=>{
+    dispatch(logout())
+  }
 
   return (
     <MenuContainer>
@@ -111,6 +117,7 @@ export const Menu = ({theme,setTheme}) => {
         </Link></>)}
         <Hr/>
         <Option onClick={()=>setTheme(!theme)}><SettingsBrightnessIcon/>Light Mode</Option>
+        <Option onClick={logoutPls}><LogoutIcon/>Log out</Option>
       </Wrapper>
     </MenuContainer>
   )
