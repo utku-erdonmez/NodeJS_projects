@@ -62,9 +62,7 @@ export const googleAuth=async(req,res,next)=>{
                 const saltRounds=13;
                 const salt =  bcrypt.genSaltSync(saltRounds);
                 const hash =  bcrypt.hashSync(req.body.userPassword,salt)
-                
-                console.log((req.body.userPassword))//check is there any password
-                
+        
                 const newUser= await new User({...req.body,userPassword:hash});
                 await newUser.save()
                 const token=jwt.sign({id:newUser._id},process.env.SECRET_KEY)

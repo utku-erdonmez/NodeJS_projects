@@ -124,26 +124,31 @@ export const SignIn = () => {
     try{
     signInWithPopup(auth,provider)
     .then(async (googleRes)=>{
+      console.log(googleRes)
       dispatch(loginStart());
       const res=await axios("http://localhost:8002/api/auth/google",{
         method:"post",
         data:{
           userName:googleRes.user.displayName,
-          userEmail:googleRes.user.displayName.email,
+          userEmail:googleRes.user.email,
           userPassword:googleRes.user.reloadUserInfo.localId,
           img:googleRes.user.photoURL
         },
         withCredentials:true
         
     }
+   
     
     )
+   
     return res
     }).then((res)=>{
+
       dispatch(loginSuccess(res.data))
       navigate("/")
     })
     .catch((err)=>{
+     
       console.log(err)
       dispatch(loginFailure())
     })

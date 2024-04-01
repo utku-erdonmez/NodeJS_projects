@@ -134,7 +134,7 @@ export const Video = () => {
    
 
 
-  },[]);
+  },[videoPath]);
   const handleLike=async ()=>{
     try{
       await axios.post(

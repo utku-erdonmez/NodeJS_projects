@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const isArraySet=(arr)=>{ 
     try{
-        return new set(arr).size===arr.length;}
+        return new Set(arr).size===arr.length;}
     catch(err){
         return console.log(err)
     }

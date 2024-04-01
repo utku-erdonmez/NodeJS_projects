@@ -6,6 +6,7 @@ export const addComment=async(req,res,next)=>{
     try{
         const newComment= await new comment({...req.body,userId:req.decoded.id})
         await newComment.save();
+        console.log("comment aded")
         res.status(200).json(newComment);
     }
     catch(err){

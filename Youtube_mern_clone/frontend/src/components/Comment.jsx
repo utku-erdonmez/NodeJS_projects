@@ -1,5 +1,7 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { format } from 'timeago.js';
 
 const Container=styled.div`
   display: flex;
@@ -8,16 +10,20 @@ const UserDiv=styled.div`
   width:100%;
 `;
 const UserName=styled.h1`
+font-size: 2rem;
   display: flex;
   color:${({theme})=>theme.text};
   align-items: center;
-  gap:1rem;
+  margin-bottom: 0;
+  
 `;
 const CommentDate=styled.span`
+margin-top: 0;
   color:${({theme})=>theme.hr};
   font-size: 0.8rem;
 `;
 const Avatar=styled.img`
+ margin-right: 0.8rem;
   width: 3rem;
   height:3rem;
   border-radius: 50%;
@@ -27,14 +33,26 @@ const CommentText=styled.div`
   color:${({theme})=>theme.text};
 `;
 
-export const Comment = () => {
+export const Comment = ({comment}) => {
+  const [user,setUser]=useState("")
+  useEffect(()=>{
+    const findUsername=async()=>{
+      const res=await axios(`http://localhost:8002/api/user/find/${comment.userId}`)
+     
+      setUser(res.data.userName)
+      
+    }
+    findUsername();
+   
+  },[])
+
   return (
     <Container>
         <Avatar></Avatar>
         <UserDiv>
-          <UserName>Username</UserName>
-          <CommentDate>1 second ago</CommentDate>
-          <CommentText>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident excepturi id similique blanditiis exercitationem, asperiores corporis hic perferendis optio repellat officia architecto, doloremque consequatur esse vitae explicabo magni tempora. Quia natus quis repudiandae delectus ut quaerat, commodi ducimus nisi modi veritatis labore pariatur possimus tenetur in fugiat molestiae necessitatibus libero!</CommentText>
+          <UserName>{user}</UserName>
+          <CommentDate>{format(comment.createdAt)}</CommentDate>
+          <CommentText>{comment.commentText}</CommentText>
         </UserDiv>
     </Container>
   )
