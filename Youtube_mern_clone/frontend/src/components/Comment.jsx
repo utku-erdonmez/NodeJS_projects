@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 import styled from 'styled-components'
 import { format } from 'timeago.js';
 
@@ -34,12 +35,14 @@ const CommentText=styled.div`
 `;
 
 export const Comment = ({comment}) => {
+  const {currUser}=useSelector((state)=>state.user)
+  
   const [user,setUser]=useState("")
   useEffect(()=>{
     const findUsername=async()=>{
       const res=await axios(`http://localhost:8002/api/user/find/${comment.userId}`)
      
-      setUser(res.data.userName)
+      setUser(res.data)
       
     }
     findUsername();
@@ -48,9 +51,9 @@ export const Comment = ({comment}) => {
 
   return (
     <Container>
-        <Avatar></Avatar>
+        <Avatar src={user.img}></Avatar>
         <UserDiv>
-          <UserName>{user}</UserName>
+          <UserName>{user.userName}</UserName>
           <CommentDate>{format(comment.createdAt)}</CommentDate>
           <CommentText>{comment.commentText}</CommentText>
         </UserDiv>

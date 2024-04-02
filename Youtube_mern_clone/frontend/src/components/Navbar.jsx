@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 //icons
 import VideoCallIcon from '@mui/icons-material/VideoCall';
@@ -7,6 +7,7 @@ import SearchIcon from '@mui/icons-material/Search';
 
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Upload } from './Upload.jsx';
 
 
 const Container=styled.div`
@@ -76,12 +77,17 @@ export const Navbar = () => {
   // Check if the current route is the sign-in page
   const isSignInPage = location.pathname === '/signIn';
 
-  // If it is the sign-in page, don't render the Navbar
-  if (isSignInPage) {
-    return null;
+  const [open,setOpen]=useState(false)
+  
+  const handleUpload=()=> {
+    console.log("BUTONA BASLDI " )
+    setOpen(!open);
+
   }
  
   return (
+    isSignInPage?null:(
+      <>
     <Container>
       <Wrappers>
         <SearchDiv>
@@ -90,11 +96,20 @@ export const Navbar = () => {
         </SearchDiv>
 
        { currUser ? (
-        <UserDiv><VideoCallIcon style={{fontSize:"2.5rem"}}></VideoCallIcon><Avatar src={currUser.img}></Avatar>{currUser.userName}</UserDiv>
+        <UserDiv>
+         
+            <VideoCallIcon onClick={handleUpload} style={{fontSize:"2.5rem"}}/>
+       
+        <Avatar onClick={(e)=>alert("dont touch this")} src={currUser.img}></Avatar>{currUser.userName} 
+        </UserDiv>
        ) :(<Link to='/signIn' style={{textDecoration:"none"}}>
         <LoginButton><AccountCircleIcon/>Login</LoginButton>
         </Link>)}
       </Wrappers>
+
     </Container>
+      {open && <Upload setOpen={setOpen}/>}
+     </>)
+
   )
 } 

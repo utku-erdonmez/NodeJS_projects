@@ -32,11 +32,13 @@ function App() {
   return (
     <ThemeProvider theme={theme ? darkTheme:lightTheme}>
       <BrowserRouter>
+     
       <Container>
+     
            {!hideMenuNavbar && <Menu theme={theme} setTheme={setTheme} />}
-   
+           
           <Main> 
-            {!hideMenuNavbar &&<Navbar />}
+          {!hideMenuNavbar &&<Navbar />}
             <Wrapper>
             <Routes>
               <Route path='/signin' element={<SignIn setHideMenuNavbar={setHideMenuNavbar} />} />
