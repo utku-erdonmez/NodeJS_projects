@@ -13,7 +13,16 @@ export const signUp= async (req,res,next)=>{
             console.log((req.body.userPassword))//check is there any password
             const newUser= await new User({...req.body,userPassword:hash});
             await newUser.save()
-            res.send("user created")
+
+            console.log(newUser)
+            const token=jwt.sign({id:newUser._id},process.env.SECRET_KEY)
+         
+            res
+                .cookie("access_token",token,{
+                    httpOnly:true//prevents document.cookie
+                })
+                .status(200)
+                .json({...newUser._doc, userPassword: "hidden"});
         }catch(err)
         {
             next(err)

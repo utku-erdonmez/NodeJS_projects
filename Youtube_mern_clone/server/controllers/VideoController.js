@@ -1,6 +1,7 @@
 import { createError } from '../createError.js';
 import video from '../models/Video.js'
 import user from '../models/User.js'
+
 export const addVideo= async (req,res,next)=>{
     try{
         const newVideo= await new video({...req.body,userId:req.decoded.id})

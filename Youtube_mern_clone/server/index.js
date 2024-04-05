@@ -17,7 +17,7 @@ const connect =()=>{
 
 // Allow requests from a specific origin and enable credentials
 App.use(cors({
-  origin: 'http://localhost:3000',
+  origin: ['http://localhost:3000',"https://firebasestorage.googleapis.com/"],
   credentials: true
 }));
 

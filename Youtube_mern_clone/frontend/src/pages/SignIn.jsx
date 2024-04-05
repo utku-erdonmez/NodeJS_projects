@@ -156,6 +156,26 @@ export const SignIn = () => {
   }catch(err){
     console.log(err)
   }}
+
+
+  const handleRegister=async ()=>{
+    try{
+      const res=await axios("http://localhost:8002/api/auth/signup",{method:"post",
+      data:{userName:name,userPassword:password,userEmail:mail},
+      withCredentials:true
+  
+    })
+
+      dispatch(loginSuccess(res.data));
+      navigate("/")
+    }
+    catch(err){
+      console.log(err)
+      dispatch(loginFailure())
+
+    }
+
+  }
   return (
     <Container>
       <LoginDiv>
@@ -171,7 +191,7 @@ export const SignIn = () => {
         <UsernameFiled placeholder='username'onChange={handleNameChange}></UsernameFiled>
         <PasswordFiled placeholder='password'onChange={handlePasswordChange}></PasswordFiled>
         
-          <SingupButton>Sing Up</SingupButton>
+          <SingupButton onClick={handleRegister}>Sing Up</SingupButton>
           <div>privacy</div>
       </LoginDiv>
 

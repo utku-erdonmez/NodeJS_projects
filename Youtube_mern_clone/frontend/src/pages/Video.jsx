@@ -99,6 +99,12 @@ const Recommend=styled.div`
   flex:1.5;
 `;
 
+const VideoFrame = styled.video`
+  max-height: 720px;
+  width: 100%;
+  object-fit: cover;
+`;
+
 export const Video = () => {
   const user=useSelector((state)=>state.user);
   const {currUser}=user;
@@ -204,11 +210,15 @@ export const Video = () => {
     currUser ? (
       <Container>
         <Content>
-          <VideoDiv></VideoDiv>
+          <VideoDiv>
+       
+           <VideoFrame src={currVideo.videoVideo} controls />
+          
+          </VideoDiv>
           <VideoTitle>{currVideo.videoTitle}</VideoTitle> 
           <VideoDetails>
             <ChannelDiv>
-              <ChannelImg src={currVideo.videoImg}></ChannelImg>
+              <ChannelImg src={currUser.Img}></ChannelImg>
               <ChannelDetails>
                 <ChannelName>{channel.userName}</ChannelName>
                 <VideoDate>{channel.subscriberCount} Subscribers</VideoDate>
