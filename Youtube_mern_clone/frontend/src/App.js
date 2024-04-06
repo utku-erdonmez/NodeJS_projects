@@ -44,7 +44,7 @@ function App() {
               <Route path='/signin' element={<SignIn setHideMenuNavbar={setHideMenuNavbar} />} />
               <Route path='/' element={<Home type="random"/>} />
               <Route path='/trends' element={<Home type="trend"/>} />
-              <Route path='/subscriptions' element={<Home type="subscription"/>} />
+              <Route path='/subscriptions' element={<Home type="sub"/>} />
             
               <Route path='/video/:id' element={<Video/>} />
             </Routes>

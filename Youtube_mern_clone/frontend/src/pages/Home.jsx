@@ -20,9 +20,14 @@ export const Home=({type})=>{
       
         const fetchVideos=async ()=>{
             try{
+             
+            
+                const res = await axios(`http://localhost:8002/api/video/${type}`,
+                {method:"get",withCredentials:true}); 
+                console.log(res.data)
+                setVideos(res.data.slice(0, 24));
         
-                const res = await axios.get(`http://localhost:8002/api/video/${type}`);
-                setVideos(res.data.slice(0, 24))
+
                 
             }catch(err){
                 console.log(err)
@@ -35,9 +40,9 @@ export const Home=({type})=>{
     return(  
         <Container>
             
-                {videos.map((video)=><Card key={video._id} type={"lm"} video={video}></Card>)}
+                {videos?.map((video)=><Card key={video._id} type={"lm"} video={video}></Card>)}
 
         </Container>)
 } 
 //30
-//11.33
+//11.33console.log(res.data)

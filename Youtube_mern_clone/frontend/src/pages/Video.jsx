@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-
+import { Recomendations } from '../components/Recomendations';
 import { useDispatch, useSelector } from 'react-redux';
 //icons
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
@@ -244,7 +244,7 @@ export const Video = () => {
           <VideoDescription>{currVideo.videoDescription}</VideoDescription>
           <Comments/> 
         </Content>    
-        <Recommend></Recommend> 
+        <Recomendations></Recomendations> 
       </Container>
     ) : navigate("/signIn")
   );

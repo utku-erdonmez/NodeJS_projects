@@ -5,7 +5,7 @@ import LogoImage from '../img/ytlogo2.png'
 //icons
 import HomeIcon from '@mui/icons-material/Home';
 import LogoutIcon from '@mui/icons-material/Logout';
-import ExploreIcon from '@mui/icons-material/Explore';
+import WhatshotIcon from '@mui/icons-material/Whatshot';
 import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
 import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -94,7 +94,7 @@ export const Menu = ({theme,setTheme}) => {
         <Option><HomeIcon/> home</Option>
         </Link>
         <Link to='/trends' style={{textDecoration:"none",color:"inherit"}}>
-        <Option><ExploreIcon/>Explore</Option>
+        <Option><WhatshotIcon/>Trends</Option>
         </Link>
         <Link to='/subscriptions' style={{textDecoration:"none",color:"inherit"}}>
         <Option><SubscriptionsIcon/>Subscriptions</Option>

@@ -12,10 +12,7 @@ export const addVideo= async (req,res,next)=>{
         next(err)
     }
 } 
-//xss açığı? bulunmakta bir kullanıcı başka bir kullanıcın hesabına kendi videosunu yükleyebiliyor.
-//sorunlu parametre userId, request içinde tahmin vasıtası ile eklenirse oluyor
-//bu durumu ekleme için bir if daha ekleyip decoded.id ile userId bir değilse izin vermem
-//ancak başka sıkıntılı parametreler olabilir daha garanti bir çözüme ihtiyacım var
+//xss?? upload a video into victims channel
 export const updateVideo= async (req,res,next)=>{
     try{
         const getVideo=await video.findById(req.params.id)
@@ -81,7 +78,7 @@ export const getVideo=async(req,res,next)=>{
 }
 export const trend=async (req,res,next)=>{
     try{
-        const videos=await video.find().sort({views:-1})//find videos and sort descending order
+        const videos=await video.find().sort({videoViews:-1})//find videos and sort descending order
         res.status(200).json(videos)
 
     }catch(err){
@@ -91,15 +88,22 @@ export const trend=async (req,res,next)=>{
 
 export const sub = async (req,res,next)=>{
     try{
+       
+
         const userChannel=await user.findById(req.decoded.id);
-        const subslist=userChannel.subscribedChannels
-        
-        const listOfVideos = await Promise.all(subslist.map(async (channelId) => {
-            return await video.find({ userId: channelId });
+        const subslist=userChannel.subscribedChannels;
+        //console.log(subslist)
+        const listOfVideos = await Promise.all(
+            
+            subslist.map(async (channel) => {
+            
+            return await video.find({ userId: channel });
           }))
-        res.status(200).json(listOfVideos)
+        console.log([listOfVideos])
+        res.status(200).json(listOfVideos.flat().sort((a, b) => b.createdAt - a.createdAt));
     }catch(err){
-        next(err)
+        console.log(err)
+        //next(err)
     }
 }
 /*export const getVideoByTags=async(req,res,next)=>{

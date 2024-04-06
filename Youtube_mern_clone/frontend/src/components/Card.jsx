@@ -39,19 +39,26 @@ const Views=styled.div`
 export const Card = ({ type,video }) => {
   
   const [channel,setChannel]=useState("");
-  useEffect(()=>{
-    try{
-      const fetchChannel=async()=>{
-        const res=await axios.get(`http://localhost:8002/api/user/find/${video.userId}`)
-        setChannel(res.data)}
+  useEffect(() => {
+    if (video.userId) {
+      const fetchChannel = async () => {
+        try {
+          const res = await axios.get(`http://localhost:8002/api/user/find/${video.userId}`);
+          setChannel(res.data);
+        } catch (err) {
+          console.log("Error fetching channel:", err);
+        }
+      };
+  
       fetchChannel();
-    }    catch(err){
-      console.log(err);
+    } else {
+      console.log("Video userId is undefined:", video);
     }
-    
-  },[video.userId])
+  }, [video]);
+  
   
   return (
+    channel&&video?(
     
     <Link to={`/video/${video._id}`}style={{textDecoration:"none",color:"inherit"}}>
       <Container type={type}>
@@ -62,6 +69,6 @@ export const Card = ({ type,video }) => {
               <Views type={type}>{video.videoViews} Views • {format(video.createdAt)}</Views>
         </Details>
       </Container>
-    </Link>
+    </Link>):""
   )
 };
