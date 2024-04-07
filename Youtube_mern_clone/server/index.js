@@ -24,7 +24,7 @@ App.use(cors({
 
 App.use(cookieParser()); 
 App.use(express.json())//conv erts json to a js object
- 
+
 App.use('/api/user/',userRouter)
 App.use('/api/video/',videoRouter) 
 App.use('/api/comment/',commentRouter)

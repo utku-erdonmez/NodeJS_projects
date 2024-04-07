@@ -11,19 +11,24 @@ const Container=styled.div`
     justify-content: space-evenly;  
 `;
 
-export const Home=({type})=>{
+export const Home=({type,search})=>{
     
 
     const[videos,setVideos]=useState([]);
-
     useEffect(()=>{
       
         const fetchVideos=async ()=>{
             try{
-             
-            
-                const res = await axios(`http://localhost:8002/api/video/${type}`,
-                {method:"get",withCredentials:true}); 
+              
+                const res = await axios(
+                    type === "search"
+                      ? `http://localhost:8002/api/video/search?q=${search}`
+                      : `http://localhost:8002/api/video/${type}`,
+                    {
+                      method: "get",
+                      withCredentials: true
+                    }
+                  );
                 console.log(res.data)
                 setVideos(res.data.slice(0, 24));
         

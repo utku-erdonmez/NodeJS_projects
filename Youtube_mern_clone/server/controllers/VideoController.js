@@ -119,8 +119,10 @@ export const sub = async (req,res,next)=>{
 export const getVideoBySearch = async (req,res,next)=>{
     try{
         const query=req.query.q;
+        //console.log(query)
         const videos = await video.find({videoTitle:{$regex:query,$options:'i'}}).limit(40)
         if(!videos||videos.length === 0) return next(createError(404,"bad search"))
+        console.log(videos)
         res.status(200).json(videos)
     }catch(err){
         next(err)

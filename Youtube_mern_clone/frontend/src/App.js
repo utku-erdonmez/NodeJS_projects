@@ -29,6 +29,8 @@ width:100%;
 function App() {
   const [theme,setTheme]= useState(true)//dark default
   const [hideMenuNavbar, setHideMenuNavbar] = useState(false);
+  const [search,setSearch]=useState("");
+
   return (
     <ThemeProvider theme={theme ? darkTheme:lightTheme}>
       <BrowserRouter>
@@ -38,14 +40,15 @@ function App() {
            {!hideMenuNavbar && <Menu theme={theme} setTheme={setTheme} />}
            
           <Main> 
-          {!hideMenuNavbar &&<Navbar />}
+          {!hideMenuNavbar &&<Navbar search={search} setSearch={setSearch} />}
             <Wrapper>
             <Routes>
               <Route path='/signin' element={<SignIn setHideMenuNavbar={setHideMenuNavbar} />} />
-              <Route path='/' element={<Home type="random"/>} />
-              <Route path='/trends' element={<Home type="trend"/>} />
-              <Route path='/subscriptions' element={<Home type="sub"/>} />
-            
+              <Route path='/' element={<Home type="random"search={search}/>} />
+              <Route path='/trends' element={<Home type="trend"search={search}/>} />
+              <Route path='/subscriptions' element={<Home type="sub"search={search}/>} />
+              <Route path='/search' element={<Home type={`search?q=${search}`} search={search}/>} />
+              
               <Route path='/video/:id' element={<Video/>} />
             </Routes>
             </Wrapper>

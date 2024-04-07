@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
+import axios from 'axios'
 import styled from 'styled-components'
 //icons
 import VideoCallIcon from '@mui/icons-material/VideoCall';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SearchIcon from '@mui/icons-material/Search';
 
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Upload } from './Upload.jsx';
 
@@ -68,9 +69,10 @@ const Avatar = styled.img`
   background-color: #999;
 `;
 
-export const Navbar = () => {
+export const Navbar = ({search,setSearch}) => {
   const {currUser} = useSelector((state)=>state.user);
  
+
   const location = useLocation();
   //const selector =useSelector()
   
@@ -84,15 +86,28 @@ export const Navbar = () => {
     setOpen(!open);
 
   }
- 
+
+  const handleChange= (e)=>{
+
+    setSearch(e.target.value);
+    //console.log(search)
+
+  }
+  const navigate=useNavigate();
+ const searchButton=async()=>{
+  navigate(`search?q=${search}`);
+  
+
+
+ }
   return (
     isSignInPage?null:(
       <>
     <Container>
       <Wrappers>
         <SearchDiv>
-          <SearchInput placeholder='search'></SearchInput>
-          <SearchIcon/>
+          <SearchInput onChange={handleChange}  placeholder='search'></SearchInput>
+          <SearchIcon onClick={searchButton}style={{fontSize:"4rem",}}/>
         </SearchDiv>
 
        { currUser ? (
