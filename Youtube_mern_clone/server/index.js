@@ -10,6 +10,33 @@ import cors from 'cors'
 const App=express();
 dotenv.config()
 
+import path from 'path'
+
+import { fileURLToPath } from 'url'
+import { dir } from 'console'
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+App.use(express.static(path.join(__dirname, 'build')));
+
+
+
+// Serve the static files from the React app
+
+// Define any additional backend routes or logic here
+
+// Handles any requests that don't match the ones above
+// For SPA, it's common to serve the index.html for any route
+App.get('/', (req, res) => {
+    console.log(__dirname)
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
+
+
+
+
+
 const connect =()=>{
     mongoose.connect(process.env.MONGO_URI).then((e)=>console.log("connected to db")).catch((err)=>{console.log( err)})
 };

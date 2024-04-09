@@ -82,18 +82,23 @@ export const Navbar = ({search,setSearch}) => {
   const [open,setOpen]=useState(false)
   
   const handleUpload=()=> {
-    console.log("BUTONA BASLDI " )
+    //console.log("BUTONA BASLDI " )
     setOpen(!open);
 
   }
+  const navigate=useNavigate();
+  const handleChange= async (e)=>{
 
-  const handleChange= (e)=>{
-
-    setSearch(e.target.value);
-    //console.log(search)
+    await setSearch(e.target.value)
+    console.log("search:"+search)
+    console.log(e.target.value)
+      search==="" ? navigate("/"):
+      navigate(`search?q=${search}`);
+    
+    
 
   }
-  const navigate=useNavigate();
+
  const searchButton=async()=>{
   navigate(`search?q=${search}`);
   
@@ -106,6 +111,7 @@ export const Navbar = ({search,setSearch}) => {
     <Container>
       <Wrappers>
         <SearchDiv>
+
           <SearchInput onChange={handleChange}  placeholder='search'></SearchInput>
           <SearchIcon onClick={searchButton}style={{fontSize:"4rem",}}/>
         </SearchDiv>
