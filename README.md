@@ -1,7 +1,5 @@
 # Youtube clone project
 
-![my screenshot](./Youtube_mern_clone/Src/frontend/src/img/Screenshot.png)
-Screenshot.png
 This project represents my first attempt at using the MERN stack. it helped me grasp fundamental web development concepts and gain proficiency in JavaScript. The aim was to create a YouTube-like platform.
 
 Key Features:
@@ -21,3 +19,7 @@ Technologies Used:
 - Render
 
 References:
+
+
+
+![my screenshot](./Youtube_mern_clone/Src/frontend/src/img/Screenshot.png)
