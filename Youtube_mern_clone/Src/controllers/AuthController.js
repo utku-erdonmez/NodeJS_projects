@@ -48,7 +48,7 @@ export const signIn = async (req, res, next) => {
                 httpOnly:true//
             })
             .status(200)
-            .json({...newUser._doc, userPassword: "hidden"});
+            .json({...user._doc, userPassword: "hidden"});
     
     } catch (err) {
         next(err); 
